@@ -32,7 +32,7 @@
       position: relative;
     }
 
-    /* Grid background */
+    /* Grid background    */
     body::before {
       content: '';
       position: fixed;
@@ -187,7 +187,7 @@
       box-shadow: 0 8px 24px rgba(57,211,83,0.3);
     }
 
-    .btn-secondary {
+    .btn-secondary { 
       background: transparent;
       color: var(--text);
       border: 1px solid var(--border);
@@ -317,7 +317,7 @@
       navigator.clipboard.writeText(location.href).then(() => {
         const btn = document.querySelectorAll('.btn-secondary')[0];
         const orig = btn.innerHTML;
-        btn.innerHTML = '&#10003; コピーしました';
+        btn.innerHTML = '&#10003; コピーしました        ';
         btn.style.color = 'var(--green)';
         setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 2000);
       });
