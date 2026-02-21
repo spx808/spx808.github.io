@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Pages - Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --green: #39d353;
+      --green-dim: #196127;
+      --text: #c9d1d9;
+      --text-muted: #8b949e;
+      --white: #f0f6fc;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    /* Glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(57,211,83,0.08) 0%, transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      max-width: 680px;
+      width: 100%;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(57,211,83,0.1);
+      border: 1px solid rgba(57,211,83,0.3);
+      border-radius: 100px;
+      padding: 0.4rem 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--green);
+      margin-bottom: 2rem;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+      animation: fadeDown 0.6s 0.1s ease both;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeDown 0.6s 0.2s ease both;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: left;
+      animation: fadeDown 0.6s 0.3s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green-dim), var(--green), var(--green-dim));
+    }
+
+    .card-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-row:last-child { border-bottom: none; }
+
+    .card-key { color: var(--text-muted); }
+    .card-val { color: var(--white); }
+
+    .status-ok { color: var(--green); }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeDown 0.6s 0.4s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--black);
+      font-weight: 700;
+    }
+    .btn-primary:hover {
+      background: #4ae668;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(57,211,83,0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      border-color: var(--text-muted);
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 1.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      z-index: 1;
+      animation: fadeUp 0.6s 0.5s ease both;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Contribution graph strip */
+    .contrib {
+      display: flex;
+      gap: 3px;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.6s 0.15s ease both;
+    }
+    .contrib-col {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .contrib-cell {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="badge">
+      <span class="dot"></span>
+      GitHub Pages — デプロイ成功
+    </div>
+
+    <!-- Mini contribution graph -->
+    <div class="contrib" id="contrib"></div>
+
+    <h1>Hello,<br><span>GitHub Pages!</span></h1>
+
+    <p class="subtitle">
+      このページは GitHub Pages のテスト用に作成されました。<br>
+      デプロイが正常に完了しています。
+    </p>
+
+    <div class="card">
+      <div class="card-row">
+        <span class="card-key">// STATUS</span>
+        <span class="card-val status-ok">✓ LIVE</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">// BRANCH</span>
+        <span class="card-val">main</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">// FILE</span>
+        <span class="card-val">index.html</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">// DATE</span>
+        <span class="card-val" id="dateVal">—</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="https://github.com" class="btn btn-primary" target="_blank">
+        &#128279; GitHub を開く
+      </a>
+      <button class="btn btn-secondary" onclick="copyUrl()">
+        &#128203; URL をコピー
+      </button>
+    </div>
+  </div>
+
+  <div class="footer">// github-pages-test &nbsp;·&nbsp; index.html</div>
+
+  <script>
+    // Date
+    const d = new Date();
+    document.getElementById('dateVal').textContent =
+      d.toLocaleDateString('ja-JP', { year:'numeric', month:'2-digit', day:'2-digit' });
+
+    // Contribution graph (decorative)
+    const contrib = document.getElementById('contrib');
+    const levels = [0, 0, 0, 1, 1, 2, 3];
+    const colors = ['var(--surface)', '#0e4429', '#196127', '#239a3b', '#39d353'];
+    const COLS = 26, ROWS = 7;
+    for (let c = 0; c < COLS; c++) {
+      const col = document.createElement('div');
+      col.className = 'contrib-col';
+      for (let r = 0; r < ROWS; r++) {
+        const cell = document.createElement('div');
+        cell.className = 'contrib-cell';
+        const lvl = levels[Math.floor(Math.random() * levels.length)];
+        cell.style.background = colors[lvl];
+        cell.style.borderColor = lvl > 0 ? 'transparent' : 'var(--border)';
+        col.appendChild(cell);
+      }
+      contrib.appendChild(col);
+    }
+
+    // Copy URL
+    function copyUrl() {
+      navigator.clipboard.writeText(location.href).then(() => {
+        const btn = document.querySelectorAll('.btn-secondary')[0];
+        const orig = btn.innerHTML;
+        btn.innerHTML = '&#10003; コピーしました';
+        btn.style.color = 'var(--green)';
+        setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
